@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Vertaa kesä- ja talvirenkaiden pysähtymismatkaa eri nopeuksilla kuivalla, märällä, jäällä ja lumella.">
+  <meta name="theme-color" content="#f7f8f2">
+  <title>Renkaat ja pysähtymismatka – Ajokoulu</title>
+  <link rel="icon" href="../assets/signs/B6.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="./renkaat.css">
+  <script defer src="./renkaat.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#sisalto">Siirry sisältöön</a>
+  <header class="site-header">
+    <div class="wrap demo-header">
+      <a class="brand" href="../index.html">Ajokoulu<span class="brand-dot">.</span></a>
+      <a class="back-link" href="../index.html#ajotilanteet"><span aria-hidden="true">←</span> Ajotilanteet</a>
+    </div>
+  </header>
+  <main class="wrap tyre-demo" id="sisalto">
+    <h1>Renkaat ja <em>pysähtymismatka</em></h1>
+    <p class="demo-intro">Vertaa kesä- ja talvirenkaiden pysähtymismatkaa eri nopeuksilla ja keleillä. Kokeile myös, miten pitkälle lyhyillä ja pitkillä valoilla voi nähdä.</p>
+    <noscript><p class="demo-footnote">Ota JavaScript käyttöön, jotta voit käyttää demoa.</p></noscript>
+
+    <div class="demo-layout" id="demo" hidden>
+      <form class="demo-controls" aria-labelledby="settings-title">
+        <h2 id="settings-title">Ajo-olosuhteet</h2>
+        <div class="speed-control">
+          <div class="speed-heading">
+            <label for="speed">Nopeus</label>
+            <span id="speed-value" aria-hidden="true"></span>
+          </div>
+          <input type="range" id="speed" name="speed" min="20" max="120" step="5" value="60">
+          <div class="range-endpoints" aria-hidden="true"><span>20 km/h</span><span>120 km/h</span></div>
+        </div>
+
+        <fieldset>
+          <legend>Tien pinta</legend>
+          <div class="surface-options">
+            <label class="demo-choice"><input type="radio" name="surface" value="dry"><span><span class="surface-swatch dry" aria-hidden="true"></span>Kuiva</span></label>
+            <label class="demo-choice"><input type="radio" name="surface" value="wet" checked><span><span class="surface-swatch wet" aria-hidden="true"></span>Märkä</span></label>
+            <label class="demo-choice"><input type="radio" name="surface" value="ice"><span><span class="surface-swatch ice" aria-hidden="true"></span>Jää</span></label>
+            <label class="demo-choice"><input type="radio" name="surface" value="snow"><span><span class="surface-swatch snow" aria-hidden="true"></span>Lumi</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Tarkasteltavat renkaat</legend>
+          <div class="tyre-options">
+            <label class="demo-choice"><input type="radio" name="tyre" value="summer" checked><span>Kesärenkaat</span></label>
+            <label class="demo-choice"><input type="radio" name="tyre" value="winter"><span>Talvirenkaat</span></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Ajovalot pimeällä</legend>
+          <div class="headlight-options">
+            <label class="demo-choice"><input type="radio" name="headlight" value="50" checked><span>Lyhyet <small>50&nbsp;m</small></span></label>
+            <label class="demo-choice"><input type="radio" name="headlight" value="150"><span>Pitkät <small>150&nbsp;m</small></span></label>
+          </div>
+        </fieldset>
+      </form>
+
+      <section class="demo-results" aria-labelledby="results-title">
+        <div class="result-summary">
+          <h2 id="results-title">Pysähtymismatka</h2>
+          <p class="total-distance" id="total-distance"></p>
+          <p class="result-context" id="result-context"></p>
+          <dl class="distance-breakdown">
+            <div><dt>Reaktiomatka</dt><dd id="reaction-distance"></dd></div>
+            <div><dt>Jarrutusmatka</dt><dd id="braking-distance"></dd></div>
+          </dl>
+        </div>
+        <div class="demo-comparison">
+          <h3>Rengasvertailu</h3>
+          <ul class="chart-legend">
+            <li><span class="chart-key reaction" aria-hidden="true"></span>Reaktiomatka</li>
+            <li><span class="chart-key braking" aria-hidden="true"></span>Jarrutusmatka</li>
+            <li><span class="chart-key visibility" aria-hidden="true"></span>Havaintoetäisyys <strong id="visibility-distance"></strong></li>
+          </ul>
+          <div class="comparison-chart">
+            <div class="chart-row" data-tyre="summer">
+              <div class="chart-row-label"><strong>Kesärenkaat</strong><span class="chart-total"></span></div>
+              <div class="chart-track" aria-hidden="true">
+                <span class="chart-segment reaction"></span><span class="chart-segment braking"></span>
+              </div>
+            </div>
+            <div class="chart-row" data-tyre="winter">
+              <div class="chart-row-label"><strong>Talvirenkaat</strong><span class="chart-total"></span></div>
+              <div class="chart-track" aria-hidden="true">
+                <span class="chart-segment reaction"></span><span class="chart-segment braking"></span>
+              </div>
+            </div>
+            <div class="chart-axis" id="chart-axis" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+            <p class="chart-interval">Yhden asteikkovälin (<span id="chart-interval-distance"></span>) kulkemiseen kuluu tasaisella nopeudella <strong id="chart-interval-time"></strong>.</p>
+          </div>
+          <div class="comparison-notes">
+            <p id="comparison-note"></p>
+            <p id="visibility-note"></p>
+          </div>
+          <p class="sr-only" id="result-announcement" role="status"></p>
+        </div>
+      </section>
+      <p class="demo-tip"><strong>Kokeile nopeuksia 40 ja 80 km/h.</strong> Kun nopeus kaksinkertaistuu samalla pinnalla ja samoilla renkailla, jarrutusmatka nelinkertaistuu.</p>
+    </div>
+
+    <p class="demo-footnote">Matkat ovat havainnollistavia arvioita tasaisella tiellä ja yhden sekunnin reaktioajalla. Todellinen pysähtymismatka vaihtelee esimerkiksi renkaan kunnon, lämpötilan ja tien pinnan mukaan.</p>
+    <p class="demo-footnote">Havaintoetäisyydet kuvaavat esimerkkiä heijastimettomasta jalankulkijasta pimeällä. Lyhyiden valojen arvio koskee kohtaamistilannetta. Todelliseen havaintoetäisyyteen vaikuttavat muun muassa valot, vaatetus ja sää. <a href="https://www.liikenneturva.fi/liikenteessa/heijastin/">Liikenneturva</a></p>
+    <details class="demo-method">
+      <summary>Miten matkat lasketaan?</summary>
+      <p>Reaktiomatka saadaan kertomalla nopeus reaktioajalla. Jarrutusmatka saadaan jakamalla nopeuden neliö kaksinkertaisella hidastuvuudella. Laskussa nopeus on metreinä sekunnissa ja hidastuvuus oletetaan vakioksi.</p>
+      <p>Kuiva ja märkä kuvaavat lämmintä asfalttia, jää sileää jäätä ja lumi pakkautunutta lunta. Hidastuvuudet ovat mallin esimerkkiarvoja. Talvirengas kuvaa yhtä kuvitteellista talvirengasta, sillä nasta- ja kitkarenkaiden pito vaihtelee.</p>
+      <p id="model-values" hidden></p>
+      <p><a href="https://www.liikenneturva.fi/liikenteessa/turvallinen-ajonopeus/">Liikenneturva: ajonopeus ja pysähtymismatka</a> · <a href="https://www.vti.se/en/archives/news/archives/2026-08-31-significant-risk-increase-with-winter-tyres-in-summer">VTI: talvirenkaiden pito eri keleillä</a></p>
+    </details>
+  </main>
+</body>
+</html>

@@ -1,0 +1,440 @@
+.tyre-demo, .demo-header {
+  max-width: 1080px;
+}
+
+.demo-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 64px;
+}
+
+.demo-header .brand {
+  display: inline-block;
+}
+
+.back-link {
+  color: var(--forest);
+  font-size: .88rem;
+  font-weight: 800;
+  text-underline-offset: .25em;
+}
+
+.back-link span {
+  margin-right: .35rem;
+}
+
+.tyre-demo {
+  padding-block: clamp(32px, 6vw, 64px) 48px;
+}
+
+.tyre-demo h1 {
+  max-width: 20ch;
+  font-size: clamp(2rem, 6vw, 4.25rem);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -.062em;
+  overflow-wrap: anywhere;
+}
+
+.tyre-demo h1 em {
+  color: var(--green);
+  font-style: normal;
+}
+
+.demo-intro {
+  max-width: 58ch;
+  margin-top: 1rem;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.demo-layout {
+  display: grid;
+  grid-template-columns: minmax(270px, .78fr) minmax(0, 1.4fr);
+  grid-template-rows: auto 1fr;
+  gap: 1rem;
+  margin-top: 1.65rem;
+}
+
+.demo-controls, .demo-results {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 19px;
+  background: var(--surface);
+}
+
+.demo-controls, .result-summary, .demo-comparison {
+  padding: clamp(1rem, 3vw, 1.7rem);
+}
+
+.demo-controls h2, .demo-comparison h3 {
+  font-size: 1.23rem;
+  font-weight: 800;
+  letter-spacing: -.032em;
+}
+
+.speed-control, .demo-controls fieldset {
+  margin: 1.4rem 0 0;
+}
+
+.speed-heading, .range-endpoints, .chart-row-label, .chart-axis {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: .4rem;
+}
+
+.speed-heading label, .demo-controls legend {
+  font-size: .9rem;
+  font-weight: 800;
+}
+
+#speed-value {
+  color: var(--forest);
+  font-size: 1.1rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+#speed {
+  display: block;
+  width: 100%;
+  height: 36px;
+  margin: .25rem 0 0;
+  accent-color: var(--green);
+  cursor: pointer;
+}
+
+.range-endpoints, .chart-axis {
+  color: var(--muted);
+  font-size: .75rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.demo-controls fieldset {
+  min-width: 0;
+  padding: 0;
+  border: 0;
+}
+
+.demo-controls legend {
+  margin-bottom: .5rem;
+  padding: 0;
+}
+
+.surface-options, .tyre-options, .headlight-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .45rem;
+}
+
+.demo-choice {
+  position: relative;
+  display: flex;
+  cursor: pointer;
+}
+
+.demo-choice input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  clip-path: inset(50%);
+}
+
+.demo-choice > span {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  align-content: center;
+  align-items: center;
+  gap: .45rem;
+  min-height: 44px;
+  padding: .5rem .6rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  font-size: .8rem;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.tyre-options .demo-choice > span, .headlight-options .demo-choice > span {
+  justify-content: center;
+}
+
+.headlight-options small {
+  color: var(--muted);
+  font-size: .75rem;
+}
+
+.demo-choice:hover > span {
+  background: var(--page);
+}
+
+.demo-choice input:checked + span {
+  border-color: var(--green);
+  background: var(--pale);
+  color: var(--forest);
+  box-shadow: inset 0 0 0 1px var(--green);
+}
+
+.demo-choice input:focus-visible + span {
+  outline: 3px solid #287354;
+  outline-offset: 3px;
+}
+
+.surface-swatch {
+  width: 19px;
+  height: 19px;
+  flex: none;
+  border: 1px solid #233a3544;
+  border-radius: 5px;
+}
+
+.surface-swatch.dry {
+  background: #5c665f;
+}
+
+.surface-swatch.wet {
+  background: repeating-linear-gradient(135deg, #406978 0 3px, #7a9ca7 3px 4px, #406978 4px 7px);
+}
+
+.surface-swatch.ice {
+  background: linear-gradient(145deg, #a4c9d4 40%, #f5fcff 43%, #a4c9d4 52%, #dceef2);
+}
+
+.surface-swatch.snow {
+  background: radial-gradient(#a7b6bc 20%, transparent 24%) 0 0 / 5px 5px, #f4f8f9;
+}
+
+.demo-tip {
+  align-self: start;
+  padding: .8rem .9rem;
+  border-left: 3px solid #86a47b;
+  border-radius: 0 8px 8px 0;
+  background: #f1f5ed;
+  line-height: 1.55;
+  font-size: .83rem;
+}
+
+.demo-results {
+  grid-row: span 2;
+  --reaction-color: #f0c86d;
+  --braking-color: #347854;
+  --visibility-color: #362e72;
+  --track-color: #edf1e9;
+}
+
+.demo-results[data-surface="wet"] { --track-color: #e7eff1; }
+.demo-results[data-surface="ice"] { --track-color: #e1eff5; }
+.demo-results[data-surface="snow"] { --track-color: #edf1f5; }
+
+.result-summary {
+  border-radius: 18px 18px 0 0;
+  background: var(--forest);
+  color: #fff;
+}
+
+.result-summary h2 {
+  font-size: .94rem;
+  font-weight: 800;
+}
+
+.total-distance {
+  margin-top: .25rem;
+  font-size: clamp(2.5rem, 7vw, 4.25rem);
+  font-weight: 800;
+  line-height: 1.07;
+  letter-spacing: -.06em;
+  font-variant-numeric: tabular-nums;
+}
+
+.result-context {
+  margin-top: .3rem;
+  color: #dbecdf;
+  font-size: .87rem;
+}
+
+.distance-breakdown {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .8rem;
+  margin: 1rem 0 0;
+  padding-top: .9rem;
+  border-top: 1px solid #628b73;
+}
+
+.distance-breakdown dt {
+  color: #dbecdf;
+  font-size: .78rem;
+}
+
+.distance-breakdown dd {
+  margin: .2rem 0 0;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem 1rem;
+  margin: .55rem 0 .95rem;
+  padding: 0;
+  color: var(--muted);
+  font-size: .78rem;
+  list-style: none;
+}
+
+.chart-legend li {
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+}
+
+.chart-key {
+  display: inline-block;
+  width: .7rem;
+  height: .7rem;
+  border-radius: 2px;
+}
+
+.reaction { background: var(--reaction-color); }
+.braking { background: var(--braking-color); }
+.chart-key.visibility {
+  border-left: 2px dashed var(--visibility-color);
+  border-radius: 0;
+  width: 2px;
+}
+
+.chart-row + .chart-row {
+  margin-top: .72rem;
+}
+
+.chart-row-label {
+  margin-bottom: .25rem;
+  font-size: .83rem;
+}
+
+.chart-total {
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.chart-track {
+  position: relative;
+  display: flex;
+  height: 20px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: var(--track-color);
+}
+
+.chart-track::after {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(to right, transparent calc(100% - 1px), #192d2430 calc(100% - 1px));
+  background-size: 25% 100%;
+  content: "";
+}
+
+.chart-track::before {
+  position: absolute;
+  z-index: 1;
+  inset-block: 0;
+  left: clamp(0px, calc(var(--visibility-position) - 1px), calc(100% - 2px));
+  border-left: 2px dashed var(--visibility-color);
+  background: #fff;
+  content: "";
+}
+
+.chart-segment {
+  flex: none;
+}
+
+.chart-axis {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) 0;
+  gap: 0;
+  margin-top: .3rem;
+}
+
+.chart-axis span {
+  justify-self: start;
+  white-space: nowrap;
+  transform: translateX(-50%);
+}
+
+.chart-axis span:first-child { transform: none; }
+.chart-axis span:last-child { justify-self: end; transform: none; }
+
+.chart-interval {
+  margin-top: .45rem;
+  color: var(--muted);
+  font-size: .8rem;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+}
+
+.chart-interval strong {
+  color: var(--ink);
+}
+
+.comparison-notes {
+  margin-top: .85rem;
+  padding-top: .75rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: .84rem;
+  line-height: 1.55;
+}
+
+.comparison-notes p + p {
+  margin-top: .45rem;
+}
+
+#visibility-note {
+  color: var(--ink);
+  font-weight: 800;
+}
+
+.demo-footnote, .demo-method p {
+  max-width: 80ch;
+  color: var(--muted);
+  font-size: .84rem;
+  line-height: 1.65;
+}
+
+.demo-footnote, .demo-method {
+  margin-top: .9rem;
+}
+
+.demo-footnote + .demo-footnote {
+  margin-top: .4rem;
+}
+
+.demo-method {
+  padding-top: .75rem;
+  border-top: 1px solid var(--line);
+}
+
+.demo-method summary {
+  width: fit-content;
+  color: var(--forest);
+  cursor: pointer;
+  font-size: .88rem;
+  font-weight: 800;
+}
+
+.demo-method p {
+  margin-top: .65rem;
+}
+
+@media (max-width: 730px) {
+  .demo-layout { grid-template: none / minmax(0, 1fr); }
+  .demo-results { grid-row: auto; }
+  .speed-control, .demo-controls fieldset { margin-top: 1rem; }
+}
