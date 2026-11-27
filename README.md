@@ -6,7 +6,7 @@ Ajokoulu on itsenäinen ja epävirallinen projekti henkilökohtaiseen harjoittel
 
 - Merkkikirjastossa on 287 merkkiä yhdeksässä ryhmässä, haku nimen ja tunnuksen perusteella, selitteet sekä monivalintaharjoitus.
 - Ajotilanteissa on kuusi kaista-ajon tehtävää ja kuusi risteysten ajojärjestystehtävää. Jokaisen vastauksen jälkeen näytetään perustelu ja linkki sovellettavaan sääntöön.
-- B-luokan teoriakysymyspankissa on 36 Ajokoulun laatimaa sanallista monivalintaa yhdeksästä aihepiiristä. Valitse yksi aihe tai tee 15 kysymyksen sekaharjoitus. Kysymykset sisältävät vastausperustelut ja lähdeviitteet.
+- B-luokan teoriakysymyspankissa on 100 Ajokoulun laatimaa sanallista monivalintakysymystä yhdeksästä aihepiiristä. Valitse yksi aihe tai tee 15 kysymyksen sekaharjoitus. Kysymykset sisältävät vastausperustelut ja lähdeviitteet.
 - Harjoituksen päätteeksi voi kerrata virheet. Edistyminen säilyy käyttökerran ajan, ja käyttäjä voi sallia sen tallentamisen omaan selaimeensa 180 päiväksi.
 
 ## Käyttö
