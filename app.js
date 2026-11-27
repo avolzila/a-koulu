@@ -22,7 +22,6 @@ const signsByCode = new Map(trafficSigns.map(sign => [sign.code, sign]));
 const groupsById = new Map(categories.map(category => [category.id, category]));
 const featured = featuredCodes.map(code => signsByCode.get(code));
 const orderedSigns = [...featured, ...trafficSigns.filter(sign => !featuredCodes.includes(sign.code))];
-const storageKey = "ajokoulu.opitut.v1";
 const initialLimit = 8;
 const morePerPage = 24;
 const state = { category: "", learnedOnly: false, limit: initialLimit, detail: null, questionSet: null };
@@ -38,20 +37,12 @@ const quizContent = byId("quiz-content");
 const progressDialog = byId("progress-dialog");
 
 function readLearned() {
-  try {
-    const saved = JSON.parse(localStorage.getItem(storageKey));
-    return new Set(Array.isArray(saved) ? saved.filter(code => signsByCode.has(code)) : []);
-  } catch {
-    return new Set();
-  }
+  const saved = progressStorage.read("learned");
+  return new Set(Array.isArray(saved) ? saved.filter(code => signsByCode.has(code)) : []);
 }
 
 function saveLearned() {
-  try {
-    localStorage.setItem(storageKey, JSON.stringify([...learned]));
-  } catch {
-    // Continue with in-memory progress when storage is unavailable.
-  }
+  progressStorage.write("learned", learned.size ? [...learned] : null);
 }
 
 function icon(name) {
@@ -217,7 +208,7 @@ function refreshLearned(changedCode) {
   if (card) card.outerHTML = signCard(signsByCode.get(changedCode));
 }
 
-function showProgress() {
+function renderLearnedProgress() {
   byId("progress-description").textContent =
     `${learned.size} / ${trafficSigns.length} merkkiä opittu. Voit merkitä oppimasi merkit merkkikirjastossa.`;
   byId("progress-groups").innerHTML = categories.slice(1).map(({ id, label }) => {
@@ -226,6 +217,10 @@ function showProgress() {
     return `<div><div class="progress-row"><span>${label}</span><span>${count} / ${group.length}</span></div>
       <progress value="${count}" max="${group.length}" aria-label="${label}"></progress></div>`;
   }).join("");
+}
+
+function showProgress() {
+  renderLearnedProgress();
   progressDialog.showModal();
 }
 
@@ -451,12 +446,24 @@ for (const dialog of document.querySelectorAll("dialog")) {
   dialog.querySelector(".close-dialog").addEventListener("click", () => dialog.close());
 }
 
-window.addEventListener("storage", event => {
-  if (event.key !== storageKey && event.key !== null) return;
-  learned = readLearned();
+function renderLearnedChange() {
   updateLearnedTotal();
   renderCatalog();
   if (signDialog.open) updateLearnedButton();
+  if (progressDialog.open) renderLearnedProgress();
+}
+
+window.addEventListener("storage", event => {
+  if (event.key !== progressStorage.keys.learned || !progressStorage.allowed()) return;
+  learned = readLearned();
+  renderLearnedChange();
+});
+
+window.addEventListener("progress-storage-change", ({ detail }) => {
+  if (detail.enabled) learned = new Set([...readLearned(), ...learned]);
+  if (detail.discardCurrent) learned.clear();
+  if (detail.saveCurrent) saveLearned();
+  renderLearnedChange();
 });
 
 signDialog.addEventListener("close", () => {

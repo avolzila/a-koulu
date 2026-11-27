@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Ajokoulun tietosuojaseloste ja eväste- ja tallennuskäytäntö.">
+  <meta name="theme-color" content="#f7f8f2">
+  <title>Ajokoulu – Tietosuoja ja selaintallennus</title>
+  <link rel="icon" href="./assets/signs/B6.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#sisalto">Siirry sisältöön</a>
+  <header class="site-header">
+    <div class="wrap privacy-header">
+      <a class="brand" href="./index.html" aria-label="Ajokoulun etusivu"><span>Ajokoulu<span class="brand-dot">.</span></span></a>
+      <a class="button button-outline" href="./index.html">Palaa Ajokouluun</a>
+    </div>
+  </header>
+  <main class="wrap privacy-document" id="sisalto">
+    <h1>Tietosuojaseloste</h1>
+    <p>Voit harjoitella Ajokoulussa ilman käyttäjätiliä. Harjoitustiedot käsitellään omalla laitteellasi, eikä Ajokoulu lähetä niitä palvelimelle tai ylläpidä käyttäjärekisteriä. Ajokoulu ei käytä analytiikkaa, mainontaa tai kävijäseurantaa.</p>
+
+    <section aria-labelledby="hosting-title">
+      <h2 id="hosting-title">GitHub Pagesin tietoturvalokit</h2>
+      <p>Kun käytät GitHub Pagesissa julkaistua Ajokoulua, GitHub kirjaa ja säilyttää IP-osoitteesi tietoturvaa varten. Tämä tapahtuu riippumatta Ajokoulun tallennusvalinnastasi. <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages#data-collection">GitHub Pagesin kuvaus tietojen keräämisestä</a></p>
+      <p>GitHub kertoo omasta henkilötietojen käsittelystään, säilyttämisestä ja tietosuojaoikeuksien käyttämisestä tietosuojaselosteessaan. Henkilötietojen käsittelystä voi tehdä ilmoituksen tietosuojavaltuutetulle. <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHubin tietosuojaseloste</a> · <a href="https://tietosuoja.fi/ilmoitus-tietosuojavaltuutetulle">Tietosuojavaltuutetun toimisto</a></p>
+    </section>
+
+    <section id="evasteet" aria-labelledby="storage-policy-title">
+      <h2 id="storage-policy-title">Eväste- ja tallennuskäytäntö</h2>
+      <p>Ajokoulu käyttää HTTP-evästeiden sijaan selaimen paikallista tallennustilaa (<code>localStorage</code>). Sen ainoa tarkoitus on säilyttää edistymisesi seuraavaa käyntiä varten. Tallennus on oletuksena pois käytöstä ja käynnistyy, kun valitset <strong>Salli edistymisen tallennus</strong>. <a href="https://www.traficom.fi/files/media/regulation/Ev%C3%A4steohjeistus_palveluntarjoajille.pdf">Traficomin ohje evästeistä ja vastaavista tekniikoista</a></p>
+      <dl class="storage-list">
+        <div>
+          <dt>Tallennuslupa</dt>
+          <dd>Suostumuksen voimassaolon päättymisajankohta.</dd>
+          <dd><code>ajokoulu.tallennuslupa.v1</code></dd>
+        </div>
+        <div>
+          <dt>Opitut merkit</dt>
+          <dd>Opituiksi merkitsemiesi liikennemerkkien tunnukset.</dd>
+          <dd><code>ajokoulu.opitut.v1</code></dd>
+        </div>
+        <div>
+          <dt>Parhaat ajotilannetulokset</dt>
+          <dd>Paras kokonaisen kierroksen pistemäärä kaista-ajosta ja risteysten ajojärjestyksestä.</dd>
+          <dd><code>ajokoulu.ajotilanteet.v1</code></dd>
+        </div>
+      </dl>
+      <p>Tallennuslupa on voimassa 180 päivää. Sen päätyttyä Ajokoulu poistaa tallennetun edistymisen, kun käytät sivustoa seuraavan kerran. Ilman tallennusta edistyminen näkyy saman käyttökerran ajan.</p>
+      <p>Voit perua suostumuksesi valitsemalla <strong>Tallennusasetukset</strong> Ajokoulun alatunnisteesta tai <strong>Edistyminen</strong>-näkymästä. Peruuttaminen poistaa Ajokoulun edistymistiedot selaimestasi. Voit poistaa tiedot myös selaimesi sivustoasetuksista.</p>
+      <a class="button button-outline" href="./index.html#tallennusasetukset">Avaa tallennusasetukset</a>
+    </section>
+  </main>
+</body>
+</html>

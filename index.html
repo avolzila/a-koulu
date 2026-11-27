@@ -3,13 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Opettele Suomen liikennemerkit merkkikirjaston ja monivalintaharjoitusten avulla. Aineisto on tarkistettu vuonna 2026.">
+  <meta name="description" content="Harjoittele B-luokan teoriakysymyksiä, Suomen liikennemerkkejä, kaista-ajoa ja ajojärjestystä risteyksissä. Aineisto on tarkistettu vuonna 2026.">
   <meta name="theme-color" content="#f7f8f2">
-  <title>Ajokoulu – Liikennemerkit haltuun</title>
+  <title>Ajokoulu – Liikennemerkit ja ajotilanteet</title>
   <link rel="icon" href="./assets/signs/B6.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./driving.css">
+  <script defer src="./progress-storage.js"></script>
   <script defer src="./signs.js"></script>
   <script defer src="./app.js"></script>
+  <script defer src="./driving-data.js"></script>
+  <script defer src="./driving-diagrams.js"></script>
+  <script defer src="./driving.js"></script>
+  <script defer src="./theory-data.js"></script>
+  <script defer src="./theory.js"></script>
+  <script defer src="./terms.js"></script>
+  <script defer src="./privacy-settings.js"></script>
 </head>
 <body id="alku">
   <svg class="icon-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -31,8 +40,9 @@
     <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
     <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14m-7-7v14"/></symbol>
   </svg>
-  <a class="skip-link" href="#sisalto">Siirry sisältöön</a>
-  <header class="site-header">
+  <noscript><p class="wrap terms-noscript">Ajokoulun käyttöehtojen hyväksyminen ja harjoitukset tarvitsevat JavaScriptin.</p></noscript>
+  <a class="skip-link" href="#sisalto" data-terms-gated inert>Siirry sisältöön</a>
+  <header class="site-header" data-terms-gated inert>
     <div class="wrap header-inner">
       <a class="brand" href="#alku" aria-label="Ajokoulu, sivun alku">
         <span class="brand-mark"><svg class="icon" aria-hidden="true"><use href="#i-road"></use></svg></span>
@@ -41,6 +51,8 @@
       <nav class="nav" aria-label="Päävalikko">
         <a href="#merkkikirjasto" class="nav-primary">Merkkikirjasto</a>
         <button type="button" data-start-quiz>Harjoittele</button>
+        <a href="#ajotilanteet">Ajotilanteet</a>
+        <a href="#teoriakysymykset">Teoriakysymykset</a>
         <a href="#lahteet">Lähteet</a>
       </nav>
       <button type="button" class="progress-link" id="show-progress">
@@ -48,7 +60,7 @@
       </button>
     </div>
   </header>
-  <main class="wrap" id="sisalto">
+  <main class="wrap" id="sisalto" data-terms-gated inert>
     <section class="hero" aria-labelledby="main-title">
       <div class="hero-copy">
         <p class="eyebrow"><span></span> Suomen liikennemerkit 2026</p>
@@ -72,7 +84,70 @@
     <section class="facts" aria-label="Aineisto ja edistyminen">
       <div class="fact"><span class="fact-icon"><svg class="icon" aria-hidden="true"><use href="#i-sign"></use></svg></span><div><strong id="sign-total">Liikennemerkit</strong><span>Suomen tieliikennelain merkit</span></div></div>
       <div class="fact"><span class="fact-icon"><svg class="icon" aria-hidden="true"><use href="#i-grid"></use></svg></span><div><strong>9 merkkiryhmää</strong><span>Varoitusmerkeistä lisäkilpiin</span></div></div>
-      <div class="fact"><span class="fact-icon"><svg class="icon" aria-hidden="true"><use href="#i-progress"></use></svg></span><div><strong id="learned-total">0 opittua merkkiä</strong><span>Edistymisesi tallentuu tähän selaimeen</span></div></div>
+      <div class="fact"><span class="fact-icon"><svg class="icon" aria-hidden="true"><use href="#i-progress"></use></svg></span><div><strong id="learned-total">0 opittua merkkiä</strong><span id="progress-storage-summary">Edistyminen näkyy tällä käyttökerralla</span></div></div>
+    </section>
+
+    <section class="driving-section" id="ajotilanteet" aria-labelledby="driving-heading">
+      <div class="catalog-heading">
+        <div>
+          <h2 id="driving-heading">Ajotilanteet</h2>
+          <p>Valitse ajokaista tai ratkaise, kuka ajaa ensin. Näet jokaisen vastauksen jälkeen, mikä sääntö tilanteeseen pätee.</p>
+        </div>
+      </div>
+      <div class="driving-grid">
+        <article class="driving-card">
+          <div class="driving-card-copy">
+            <span class="fact-icon"><svg class="icon" aria-hidden="true"><use href="#i-road"></use></svg></span>
+            <h3>Kaista-ajo</h3>
+            <p>Ryhmittyminen, kaistanvaihto ja moottoritielle liittyminen.</p>
+            <button class="button button-primary" type="button" data-start-driving="lanes">
+              <svg class="icon" aria-hidden="true"><use href="#i-play"></use></svg>Harjoittele kaista-ajoa
+            </button>
+            <p class="driving-best" id="driving-best-lanes" hidden></p>
+          </div>
+          <canvas class="driving-preview" data-driving-preview="lanes" width="840" height="620" aria-hidden="true"></canvas>
+          <details class="driving-rules">
+            <summary>Kertaa kaista-ajon säännöt</summary>
+            <ul>
+              <li>Ryhmittyminen tehdään hyvissä ajoin. Huomioi ajokaistanuolet ja opasteet. <a href="https://www.finlex.fi/fi/lainsaadanto/2018/729#chp_3__sec_21">21 §</a></li>
+              <li>Ennen kaistanvaihtoa varmista, että voit siirtyä turvallisesti ja tarpeettomasti haittaamatta muita. Näytä suuntamerkki hyvissä ajoin. <a href="https://www.finlex.fi/fi/lainsaadanto/2018/729#chp_3__sec_35">35 §</a> ja <a href="https://www.finlex.fi/fi/lainsaadanto/2018/729#chp_3__sec_48">48 §</a></li>
+              <li>Moottoritielle liittyvä väistää siellä jo ajavia. <a href="https://www.finlex.fi/fi/lainsaadanto/2018/729#chp_3__sec_59">59 §</a></li>
+            </ul>
+          </details>
+        </article>
+        <article class="driving-card">
+          <div class="driving-card-copy">
+            <span class="fact-icon"><svg class="icon" aria-hidden="true"><use href="#i-yield"></use></svg></span>
+            <h3>Ajojärjestys risteyksissä</h3>
+            <p>Väistämisvelvollisuus risteyksissä, pihasta tultaessa ja liikenneympyrässä.</p>
+            <button class="button button-primary" type="button" data-start-driving="junctions">
+              <svg class="icon" aria-hidden="true"><use href="#i-play"></use></svg>Harjoittele ajojärjestystä
+            </button>
+            <p class="driving-best" id="driving-best-junctions" hidden></p>
+          </div>
+          <canvas class="driving-preview" data-driving-preview="junctions" width="840" height="620" aria-hidden="true"></canvas>
+          <details class="driving-rules">
+            <summary>Kertaa väistämissäännöt</summary>
+            <ul>
+              <li>Tasa-arvoisessa risteyksessä väistetään oikealta lähestyvää. Vasemmalle kääntyvä väistää myös vastaantulevaa liikennettä. <a href="https://www.finlex.fi/fi/lainsaadanto/2018/729#chp_3__sec_24">24 §</a></li>
+              <li>Kääntyessäsi väistä risteävää tietä ylittävää jalankulkijaa, pyöräilijää ja mopoilijaa. Pysäköintialueelta tielle tullessasi väistä muita tienkäyttäjiä. <a href="https://www.finlex.fi/fi/lainsaadanto/2018/729#chp_3__sec_24">24 §</a></li>
+              <li>Kärkikolmio velvoittaa väistämään risteävää liikennettä. STOP-merkki velvoittaa myös pysähtymään. <a href="https://www.finlex.fi/fi/lainsaadanto/2018/729#attachment_4">Merkit B5 ja B6</a></li>
+            </ul>
+          </details>
+        </article>
+      </div>
+    </section>
+
+    <section class="theory-section" id="teoriakysymykset" aria-labelledby="theory-heading">
+      <span class="fact-icon"><svg class="icon" aria-hidden="true"><use href="#i-book"></use></svg></span>
+      <div>
+        <h2 id="theory-heading">Teoriakysymykset</h2>
+        <p>Harjoittele B-luokan teoriakokeen sanallista osiota. Valitse aihe tai tee 15 kysymyksen sekaharjoitus.</p>
+        <p id="theory-bank-size" class="theory-bank-size"></p>
+      </div>
+      <button class="button button-primary" type="button" id="start-theory">
+        <svg class="icon" aria-hidden="true"><use href="#i-play"></use></svg>Avaa teoriakysymykset
+      </button>
     </section>
 
     <section class="catalog" id="merkkikirjasto" aria-labelledby="catalog-title">
@@ -100,29 +175,61 @@
       <div class="catalog-pagination" id="pagination" hidden>
         <button class="button button-outline" id="show-more" type="button"><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg>Näytä lisää merkkejä</button>
       </div>
-      <noscript><p>Merkkikirjasto ja harjoitukset tarvitsevat JavaScriptin.</p></noscript>
     </section>
 
-    <section class="roadmap" aria-labelledby="roadmap-title">
-      <span class="fact-icon"><svg class="icon" aria-hidden="true"><use href="#i-road"></use></svg></span>
-      <div><h2 id="roadmap-title">Seuraavassa versiossa</h2><p>Kaista-ajo ja ajojärjestys risteyksissä.</p></div>
-    </section>
   </main>
-  <footer class="site-footer" id="lahteet">
+  <footer class="site-footer" id="lahteet" data-terms-gated inert>
     <div class="wrap footer-inner">
       <div>
         <h2>Lähteet</h2>
-        <p>Merkkien nimet ja merkitykset perustuvat tieliikennelain liitteisiin 3.1–3.9. Aineisto tarkistettu 27.11.2026.</p>
+        <p>Merkkien nimet ja merkitykset perustuvat tieliikennelain liitteisiin 3.1–3.9. Ajotilanteiden yhteydessä on linkki tilanteeseen sovellettavaan pykälään tai liitteeseen. Aineisto tarkistettu 27.11.2026.</p>
         <p>Siirtymäaikana liikenteessä voi näkyä myös aiemman tieliikenneasetuksen mukaisia merkkejä.</p>
       </div>
       <ul>
         <li><a href="https://www.finlex.fi/fi/lainsaadanto/2018/729">Finlex · Tieliikennelaki 729/2018</a></li>
         <li><a href="https://www.finlex.fi/fi/lainsaadanto/saadoskokoelma/2026/281">Finlex · Muutos 281/2026</a></li>
+        <li><a href="https://www.finlex.fi/fi/viranomaiset/maarayskokoelmat/traficom-tieliikenne/2026/8">Traficom · Kuljettajantutkinnon teoriakoemääräys</a></li>
         <li><a href="https://github.com/finnishtransportagency/liikennemerkit">Väylävirasto · Merkkikuvat (CC0)</a></li>
         <li><a href="https://www.traficom.fi/fi/tieliikenteen-turvallisuus-ja-valvonta/tie-ja-raitioliikenteen-ohjauslaitteiden-varit-rakenne-ja-mitoitus">Traficom · Merkkien värit ja mitoitus</a></li>
       </ul>
     </div>
+    <div class="wrap footer-notice">
+      <p><strong>Epävirallinen harjoittelusivusto.</strong> Ajokoulu on itsenäinen projekti henkilökohtaiseen harjoitteluun. Harjoitusmateriaalissa voi olla virheitä tai vanhentuneita tietoja.</p>
+    </div>
+    <nav class="wrap privacy-links" aria-label="Käyttöehdot ja tietosuoja">
+      <button type="button" id="show-terms">Käyttöehdot</button>
+      <a href="./tietosuoja.html">Tietosuojaseloste</a>
+      <a href="./tietosuoja.html#evasteet">Eväste- ja tallennuskäytäntö</a>
+      <button type="button" data-storage-settings>Tallennusasetukset</button>
+    </nav>
   </footer>
+
+  <dialog id="terms-dialog" aria-labelledby="terms-title" aria-describedby="terms-intro" class="dialog terms-dialog">
+    <div class="dialog-top">
+      <p class="dialog-kicker">Ajokoulu</p>
+      <p id="terms-scroll-hint" class="terms-scroll-hint">Hyväksyntä on ikkunan lopussa.</p>
+      <button class="icon-button close-dialog" type="button" aria-label="Sulje käyttöehdot" hidden><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg></button>
+    </div>
+    <div class="dialog-content">
+      <h2 id="terms-title" tabindex="-1">Epävirallinen harjoittelusivusto</h2>
+      <div class="terms-notice">
+        <p id="terms-intro">Ajokoulu on itsenäinen projekti, joka on tarkoitettu henkilökohtaiseen harjoitteluun. Sivusto ei ole Traficomin tai Ajovarman palvelu eikä osa virallista kuljettajantutkintoa.</p>
+        <p>Harjoitusmateriaalissa voi olla virheitä tai vanhentuneita tietoja. Tarkista ajantasaiset liikennesäännöt <a href="https://www.finlex.fi/fi/lainsaadanto/2018/729" target="_blank" rel="noopener">Finlexistä</a> ja kuljettajantutkintoa koskevat ohjeet <a href="https://www.traficom.fi/fi/autoilijat/ajokortit/kuljettajantutkinto" target="_blank" rel="noopener">Traficomilta</a>.</p>
+      </div>
+      <section class="terms-conditions" aria-labelledby="terms-conditions-title">
+        <h3 id="terms-conditions-title">Käyttöehdot</h3>
+        <p>Kaikki oikeudet Ajokoulun omaan lähdekoodiin, harjoituskysymyksiin ja muuhun tekijänoikeudella suojattuun omaan sisältöön pidätetään. Niiden muokkaaminen, jatkokehittäminen, levittäminen ja uudelleenjulkaiseminen edellyttävät oikeudenhaltijan kirjallista lupaa, ellei sovellettava laki tai GitHubin käyttöehdot salli kyseistä käyttöä.</p>
+        <p>Liikennemerkkikuvia, fontteja ja muuta kolmansien osapuolten aineistoa koskevat niiden omat käyttöehdot ja sovellettava laki.</p>
+      </section>
+      <form id="terms-acceptance" autocomplete="off">
+        <label class="terms-agreement">
+          <input type="checkbox" id="terms-confirmation" required>
+          <span>Olen lukenut ilmoituksen sivuston epävirallisuudesta ja hyväksyn käyttöehdot.</span>
+        </label>
+        <button type="submit" class="button button-primary" id="accept-terms" disabled>Hyväksy ja aloita</button>
+      </form>
+    </div>
+  </dialog>
 
   <dialog id="sign-dialog" aria-labelledby="sign-title" class="dialog">
     <div class="dialog-top"><p id="sign-category" class="dialog-kicker"></p><button class="icon-button close-dialog" type="button" aria-label="Sulje merkin tiedot"><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg></button></div>
@@ -156,7 +263,44 @@
       <h2 id="progress-title">Opitut merkit</h2>
       <p id="progress-description"></p>
       <div id="progress-groups" class="progress-groups"></div>
-      <button type="button" class="button button-primary" id="show-learned"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Selaa opittuja merkkejä</button>
+      <div class="dialog-actions">
+        <button type="button" class="button button-primary" id="show-learned"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Selaa opittuja merkkejä</button>
+        <button type="button" class="button button-outline" data-storage-settings>Tallennusasetukset</button>
+      </div>
+      <p id="progress-storage-detail" class="progress-storage-detail"></p>
+    </div>
+  </dialog>
+
+  <dialog id="theory-dialog" aria-labelledby="theory-title" class="dialog">
+    <div class="dialog-top">
+      <p class="dialog-kicker">B-luokan teoriakysymykset</p>
+      <button class="icon-button close-dialog" type="button" aria-label="Sulje teoriaharjoitus"><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg></button>
+    </div>
+    <div class="dialog-content" id="theory-content"></div>
+  </dialog>
+
+  <dialog id="driving-dialog" aria-labelledby="driving-title" class="dialog driving-dialog">
+    <div class="dialog-top">
+      <p class="dialog-kicker" id="driving-dialog-topic">Ajotilanteet</p>
+      <button class="icon-button close-dialog" type="button" aria-label="Sulje ajotilanneharjoitus"><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg></button>
+    </div>
+    <div class="dialog-content" id="driving-content"></div>
+  </dialog>
+
+  <dialog id="storage-dialog" aria-labelledby="storage-title" aria-describedby="storage-purpose" class="dialog">
+    <div class="dialog-top">
+      <p class="dialog-kicker">Tietosuoja</p>
+      <button class="icon-button close-dialog" type="button" aria-label="Sulje tallennusasetukset"><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg></button>
+    </div>
+    <div class="dialog-content">
+      <h2 id="storage-title">Tallennusasetukset</h2>
+      <p id="storage-purpose">Voit halutessasi tallentaa opitut merkit ja parhaat ajotilannetulokset tähän selaimeen 180 päiväksi. Harjoittelu toimii myös ilman tallennusta. Voit perua suostumuksesi täällä milloin tahansa.</p>
+      <p id="storage-status" class="storage-status" role="status" tabindex="-1"></p>
+      <div class="dialog-actions">
+        <button class="button button-outline" type="button" id="allow-progress-storage">Salli edistymisen tallennus</button>
+        <button class="button button-outline" type="button" id="disable-progress-storage">Jatka ilman tallennusta</button>
+      </div>
+      <p class="progress-storage-detail"><a href="./tietosuoja.html#evasteet">Eväste- ja tallennuskäytäntö</a></p>
     </div>
   </dialog>
 </body>
